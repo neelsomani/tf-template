@@ -18,6 +18,6 @@ variable "region" {
 
 variable "main_db_instance_class" {
   type        = string
-  default     = "db.t3.micro"
+  default     = "db.t2.small"
   description = "default instance type"
 }
