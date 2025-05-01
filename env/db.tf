@@ -42,6 +42,4 @@ module "aurora-db" {
   master_username = "root"
   master_password = "root"
   port            = 5432
-
-  db_cluster_parameter_group_name = "default-rep-2"
 }
