@@ -16,30 +16,26 @@ resource "aws_db_subnet_group" "db_sng" {
   }
 }
 
-module "aurora-db" {
-  source = "terraform-aws-modules/rds-aurora/aws"
+module "db" {
+  source = "terraform-aws-modules/rds/aws"
 
-  name           = "${var.environment}-main-db"
-  engine         = "aurora-postgresql"
-  engine_version = "13.12"
+  identifier = "${var.environment}-main-db"
 
-  instance_class = var.main_db_instance_class
-  instances = {
-    one = {}
-    two = {}
-  }
+  db_name        = "${var.environment}-main-db"
+  engine         = "postgresql"
+  engine_version = "17.2-R2"
 
-  vpc_id  = module.vpc.vpc_id
-  subnets = module.vpc.database_subnets
+  username = "root"
+  password = "root"
+  port     = 5432
 
   vpc_security_group_ids = [
     aws_security_group.sg_db.id,
   ]
 
+  subnets = module.vpc.database_subnets
+
+  # DB subnet group
   create_db_subnet_group = false
   db_subnet_group_name   = aws_db_subnet_group.db_sng.name
-
-  master_username = "root"
-  master_password = "root"
-  port            = 5432
 }
