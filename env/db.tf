@@ -19,11 +19,18 @@ resource "aws_db_subnet_group" "db_sng" {
 module "db" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = "${var.environment}-main-db"
+  identifier = "${var.environment}maindb"
 
-  db_name        = "${var.environment}-main-db"
-  engine         = "postgresql"
-  engine_version = "17.2-R2"
+  db_name        = "${var.environment}maindb"
+  engine         = "postgres" # Correct engine identifier for PostgreSQL
+  engine_version = "17"       # Align with major_engine_version and family parameters
+
+  instance_class = var.main_db_instance_class
+
+  major_engine_version = "17"
+  family               = "postgres17"
+
+  allocated_storage = 20 # Added required field
 
   username = "root"
   password = "root"
@@ -38,4 +45,7 @@ module "db" {
   # DB subnet group
   create_db_subnet_group = false
   db_subnet_group_name   = aws_db_subnet_group.db_sng.name
+
+  skip_final_snapshot              = true
+  final_snapshot_identifier_prefix = "final"
 }
