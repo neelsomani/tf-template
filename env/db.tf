@@ -7,6 +7,15 @@ resource "aws_security_group" "sg_db" {
   }
 }
 
+resource "aws_db_subnet_group" "db_sng" {
+  name       = "${var.environment}-main-db-sng"
+  subnet_ids = module.vpc.database_subnets
+
+  tags = {
+    Name = "${var.environment}-main-db-sng"
+  }
+}
+
 module "aurora-db" {
   source = "terraform-aws-modules/rds-aurora/aws"
 
@@ -26,6 +35,9 @@ module "aurora-db" {
   vpc_security_group_ids = [
     aws_security_group.sg_db.id,
   ]
+
+  create_db_subnet_group = false
+  db_subnet_group_name   = aws_db_subnet_group.db_sng.name
 
   master_username = "root"
   master_password = "root"
