@@ -33,7 +33,7 @@ module "db" {
     aws_security_group.sg_db.id,
   ]
 
-  subnets = module.vpc.database_subnets
+  subnet_ids = module.vpc.database_subnets
 
   # DB subnet group
   create_db_subnet_group = false
