@@ -1,13 +1,18 @@
 # Look up the caller’s AWS account
 data "aws_caller_identity" "current" {}
 
-# Expose it
-output "aws_account_id" {
-  value = data.aws_caller_identity.current.account_id
+data "terraform_remote_state" "global" {
+  backend = "local"
+
+  config = {
+    path = "../global/terraform.tfstate"
+  }
 }
 
 module "prod" {
   source = "../env"
 
   environment = "prod"
+  domain_certificate_arn = data.terraform_remote_state.global.outputs.cert_arn
+  api_config_file_name = "./configs/prod/config.json"
 }

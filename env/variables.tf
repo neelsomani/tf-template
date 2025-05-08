@@ -21,3 +21,13 @@ variable "main_db_instance_class" {
   default     = "db.t4g.micro"
   description = "default instance type"
 }
+
+variable "domain_certificate_arn" {
+  type        = string
+  description = "Certificate arn for the api server domain"
+}
+
+variable "api_config_file_name" {
+  type        = string
+  description = "Config file path for api service"
+}
