@@ -3,24 +3,46 @@
 ########################################################
 resource "aws_route53domains_registered_domain" "this" {
   domain_name = var.domain_name
-  auto_renew  = true # keep it active each year
+  auto_renew  = false # keep it active each year
 
   # === You MUST supply real contact info. Example variables shown ===
   admin_contact {
     address_line_1 = var.address1
     city           = var.city
-    state          = var.state
-    postal_code    = var.postal_code
+    contact_type   = "PERSON"
     country_code   = var.country_code # "US", "CA", …
+    state          = var.state
+    zip_code       = var.postal_code
     email          = var.email
     first_name     = var.first_name
     last_name      = var.last_name
     phone_number   = var.phone_number # "+1.5551234567"
-    contact_type   = "PERSON"
   }
 
-  registrant_contact = admin_contact[0]
-  tech_contact       = admin_contact[0]
+  registrant_contact {
+    address_line_1 = var.address1
+    city           = var.city
+    contact_type   = "PERSON"
+    country_code   = var.country_code # "US", "CA", …
+    state          = var.state
+    zip_code       = var.postal_code
+    email          = var.email
+    first_name     = var.first_name
+    last_name      = var.last_name
+    phone_number   = var.phone_number # "+1.5551234567"
+  }
+  tech_contact       {
+    address_line_1 = var.address1
+    city           = var.city
+    contact_type   = "PERSON"
+    country_code   = var.country_code # "US", "CA", …
+    state          = var.state
+    zip_code       = var.postal_code
+    email          = var.email
+    first_name     = var.first_name
+    last_name      = var.last_name
+    phone_number   = var.phone_number # "+1.5551234567"
+  }
 }
 
 ########################################################
