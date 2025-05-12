@@ -1,7 +1,9 @@
 ########################################################
 # 1. Register the domain in Route 53 Domains
 ########################################################
-resource "aws_route53domains_registered_domain" "this" {
+resource "aws_route53domains_domain" "this" {
+  provider    = aws.route53_domains_region
+
   domain_name = var.domain_name
   auto_renew  = false # keep it active each year
 
@@ -50,7 +52,7 @@ resource "aws_route53domains_registered_domain" "this" {
 ########################################################
 resource "aws_route53_zone" "public" {
   name       = var.domain_name
-  depends_on = [aws_route53domains_registered_domain.this]
+  depends_on = [aws_route53domains_domain.this]
 }
 
 ########################################################
