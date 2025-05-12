@@ -81,6 +81,23 @@ resource "aws_route53_record" "cert_validation" {
   records = [each.value.record]
 }
 
+resource "aws_route53_record" "vercel_a" {
+  zone_id = aws_route53_zone.public.zone_id
+  name    = "@"
+  type    = "A"
+  ttl     = 60
+  records = ["76.76.21.21"]
+}
+
+resource "aws_route53_record" "www_cname" {
+  zone_id = aws_route53_zone.public.zone_id
+  name    = "www"
+  type    = "CNAME"
+  ttl     = 300
+  records = ["cname.vercel-dns.com."]
+}
+
+
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for r in aws_route53_record.cert_validation : r.fqdn]
