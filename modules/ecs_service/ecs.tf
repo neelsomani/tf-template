@@ -147,5 +147,5 @@ resource "aws_route53_record" "api" {
   name    = "${var.environment}-${var.service}"
   type    = "CNAME"
   ttl     = 300
-  records = [aws_alb.alb.dns_name]
+  records = [aws_alb.alb[0].dns_name]
 }
