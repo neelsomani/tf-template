@@ -7,6 +7,19 @@ resource "aws_security_group" "sg_db" {
   }
 }
 
+# allow ingress api
+resource "aws_security_group_rule" "sg_db_ingress_rule_001" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 5432
+  protocol                 = "all"
+  security_group_id        = aws_security_group.sg_db.id
+  source_security_group_id = module.api.service_sg_id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_db_subnet_group" "db_sng" {
   name       = "${var.environment}-main-db-sng"
   subnet_ids = module.vpc.database_subnets
