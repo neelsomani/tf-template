@@ -14,6 +14,7 @@ module "api" {
 
   enable_internal_lb  = true
   aws_acm_certificate = var.domain_certificate_arn
+  zone_id             = var.global_zone_id
 }
 
 resource "aws_iam_role_policy_attachment" "api_secrets_policy_attachment" {

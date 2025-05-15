@@ -14,5 +14,6 @@ module "dev" {
 
   environment            = "dev"
   domain_certificate_arn = data.terraform_remote_state.global.outputs.cert_arn
-  api_config_file_name = "./configs/dev/config.json"
+  api_config_file_name   = "./configs/dev/config.json"
+  global_zone_id         = data.terraform_remote_state.global.outputs.zone_id
 }

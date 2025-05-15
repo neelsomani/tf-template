@@ -31,3 +31,8 @@ variable "api_config_file_name" {
   type        = string
   description = "Config file path for api service"
 }
+
+variable "global_zone_id" {
+  type        = string
+  description = "Zone ID from the global module for the main domain."
+}
