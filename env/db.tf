@@ -46,7 +46,7 @@ module "db" {
   allocated_storage = 20 # Added required field
 
   username                    = "root"
-  password                    = "root"
+  password                    = "rootpass"
   manage_master_user_password = true
   port                        = 5432
 
