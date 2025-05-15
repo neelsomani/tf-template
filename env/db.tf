@@ -45,9 +45,10 @@ module "db" {
 
   allocated_storage = 20 # Added required field
 
-  username = "root"
-  password = "root"
-  port     = 5432
+  username                    = "root"
+  password                    = "root"
+  manage_master_user_password = true
+  port                        = 5432
 
   vpc_security_group_ids = [
     aws_security_group.sg_db.id,
