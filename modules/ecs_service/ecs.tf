@@ -86,7 +86,7 @@ resource "aws_ecs_task_definition" "service" {
           awslogs-stream-prefix = "ecs"
         }
       }
-    }])
+  }])
 
   cpu          = var.cpu
   memory       = var.memory
@@ -139,4 +139,13 @@ resource "aws_ecs_service" "service" {
   lifecycle {
     ignore_changes = [task_definition]
   }
+}
+
+resource "aws_route53_record" "api" {
+  count   = var.enable_lb && var.zone_id != "" ? 1 : 0
+  zone_id = var.zone_id
+  name    = "${var.environment}-${var.service}"
+  type    = "CNAME"
+  ttl     = 300
+  records = [aws_alb.alb.dns_name]
 }

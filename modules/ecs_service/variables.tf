@@ -114,3 +114,8 @@ variable "aws_acm_certificate" {
   type        = string
   description = "ACM Certificate"
 }
+
+variable "zone_id" {
+  type        = string
+  description = "Route 53 Zone ID"
+}
