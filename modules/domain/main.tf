@@ -2,7 +2,7 @@
 # 1. Register the domain in Route 53 Domains
 ########################################################
 resource "aws_route53domains_domain" "this" {
-  provider    = aws.route53_domains_region
+  provider = aws.route53_domains_region
 
   domain_name = var.domain_name
   auto_renew  = false # keep it active each year
@@ -33,7 +33,7 @@ resource "aws_route53domains_domain" "this" {
     last_name      = var.last_name
     phone_number   = var.phone_number # "+1.5551234567"
   }
-  tech_contact       {
+  tech_contact {
     address_line_1 = var.address1
     city           = var.city
     contact_type   = "PERSON"
@@ -59,8 +59,9 @@ resource "aws_route53_zone" "public" {
 # 3. Request an ACM cert + automatically validate via DNS
 ########################################################
 resource "aws_acm_certificate" "cert" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
+  domain_name               = var.domain_name
+  subject_alternative_names = ["*.${var.domain_name}"]
+  validation_method         = "DNS"
   lifecycle { create_before_destroy = true }
 }
 
