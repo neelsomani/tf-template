@@ -1,3 +1,3 @@
 output "db_instance_uri" {
-    value = "postgres://root:root@${module.db.db_instance_address}/${var.environment}maindb"
+    value = "postgres://root:rootpass@${module.db.db_instance_address}/${var.environment}maindb"
 }
