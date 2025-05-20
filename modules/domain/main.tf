@@ -109,7 +109,7 @@ resource "aws_route53_record" "cert_validation" {
 
 resource "aws_route53_record" "vercel_a" {
   zone_id = aws_route53_zone.public.zone_id
-  name    = "@"
+  name    = ""
   type    = "A"
   ttl     = 60
   records = ["76.76.21.21"]
