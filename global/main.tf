@@ -10,6 +10,10 @@ resource "aws_s3_bucket" "terraform_dev" {
   bucket = "insert globally unique bucket name"
 }
 
+resource "aws_s3_bucket" "terraform_global" {
+  bucket = "insert globally unique bucket name"
+}
+
 module "global" {
   source = "../modules/domain"
 
