@@ -1,14 +1,6 @@
 # Look up the caller’s AWS account
 data "aws_caller_identity" "current" {}
 
-data "terraform_remote_state" "global" {
-  backend = "local"
-
-  config = {
-    path = "../global/terraform.tfstate"
-  }
-}
-
 module "dev" {
   source = "../env"
 
