@@ -55,6 +55,21 @@ resource "aws_route53_zone" "public" {
   depends_on = [aws_route53domains_domain.this]
 }
 
+# 2b.  Delegate the registered domain to the hosted-zone NS set
+resource "aws_route53domains_registered_domain" "this" {
+  domain_name = aws_route53domains_domain.this.domain_name   # same domain
+
+  # Copy the NS values that Route 53 assigned to the zone
+  dynamic "name_server" {
+    for_each = aws_route53_zone.public.name_servers
+    content {
+      name = name_server.value
+    }
+  }
+
+  depends_on = [aws_route53_zone.public]                      # wait for the zone
+}
+
 ########################################################
 # 3. Request an ACM cert + automatically validate via DNS
 ########################################################
